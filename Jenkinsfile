@@ -64,17 +64,23 @@ pipeline {
         stage('ECR Push') {
             agent {
                 docker { 
-                    image 'amazon/aws-cli' // AWS CLI가 들어있는 이미지를 소환합니다!
-                    args '-v /var/run/docker.sock:/var/run/docker.sock' // 여기서도 소켓 공유는 필수!
+                    image 'amazon/aws-cli' // AWS CLI가 들어있는 이미지를 소환
+                    args '-v /var/run/docker.sock:/var/run/docker.sock' // 소켓 공유
                 }
             }
+
+            environment {
+                AWS_ACCESS_KEY_ID     = credentials('aws-access-key')
+                AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key')
+            }
+
             steps {
                 echo "${params.SERVICE_NAME} 이미지를 AWS ECR로 쏘아 올립니다! 🚀"
                 
                 // 1. ECR 로그인
                 sh "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 541673202749.dkr.ecr.ap-northeast-2.amazonaws.com"
                 
-                // 2. ECR용 태그 생성 (하이픈 대신 슬래시 적용!) 🎯
+                // 2. ECR용 태그 생성
                 // jiaa/user-service 형태로 태깅됩니다.
                 sh "docker tag jiaa-${params.SERVICE_NAME}:${env.BUILD_NUMBER} 541673202749.dkr.ecr.ap-northeast-2.amazonaws.com/jiaa/${params.SERVICE_NAME}:${env.BUILD_NUMBER}"
                 sh "docker tag jiaa-${params.SERVICE_NAME}:${env.BUILD_NUMBER} 541673202749.dkr.ecr.ap-northeast-2.amazonaws.com/jiaa/${params.SERVICE_NAME}:latest"
