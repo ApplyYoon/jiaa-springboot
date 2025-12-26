@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Unit Test') {
             steps {
-                echo "${params.SERVICE_NAME} 유닛 테스트를 시작합니다... 🧪"
+                echo "${params.SERVICE_NAME} 유닛 테스트를 시작합니다..."
                 dir("${params.SERVICE_NAME}") {
                     sh "chmod +x ../gradlew"
                     sh "../gradlew :${params.SERVICE_NAME}:test --no-daemon"
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo "${params.SERVICE_NAME} 소스 빌드를 시작합니다..."
                 dir("${params.SERVICE_NAME}") {
-                    // 테스트는 위에서 했으니 여기선 건너뜀
+                    // 테스트는 위에서 했으니 테스트는 건너뜀
                     sh "../gradlew :${params.SERVICE_NAME}:bootJar --no-daemon -x test"
                 }
             }
