@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secrets-local.yaml
+  - discovery-service.yaml
+  - gateway-service.yaml
+  - auth-service.yaml
+  - user-service.yaml
+  - goal-service.yaml
+  - analysis-service.yaml

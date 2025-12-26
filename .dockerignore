@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+*.iml
+.vscode
+
+# Build outputs (프로덕션 Dockerfile용)
+# Dockerfile.local은 빌드된 JAR 사용하므로 libs는 허용
+**/build
+!**/build/libs
+!**/build.gradle.kts
+
+# Gradle
+.gradle
+
+# Logs
+*.log
+
+# Docker
+Dockerfile*
+docker-compose*
+
+# K8s
+k8s/
+
+# Test
+**/src/test
+
+# Misc
+*.md
+LICENSE
+
+
