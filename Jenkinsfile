@@ -42,5 +42,23 @@ pipeline {
                 }
             }
         }
+
+        stage('Vulnerability Scan') {
+            steps {
+                echo "${params.SERVICE_NAME} 이미지의 취약점을 정밀 수색합니다..."
+                
+                // HIGH, CRITICAL 등급의 취약점이 발견되면 빌드를 멈추게 설정할 수 있음
+                // 젠킨스 서버에 trivy가 설치되어 있어야 함
+                sh """
+                    docker run --rm \
+                    -v /var/run/docker.sock:/var/run/docker.sock \
+                    -v trivy-db-cache:/root/.cache \
+                    aquasec/trivy:latest image \
+                    --exit-code 1 \
+                    --severity HIGH,CRITICAL \
+                    jiaa-${params.SERVICE_NAME}:${env.BUILD_NUMBER}
+                """
+            }
+        }
     }
 }
