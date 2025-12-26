@@ -12,6 +12,7 @@ pipeline {
             steps {
                 echo "${params.SERVICE_NAME} 유닛 테스트를 시작합니다... 🧪"
                 dir("${params.SERVICE_NAME}") {
+                    sh "chmod +x ../gradlew"
                     sh "../gradlew :${params.SERVICE_NAME}:test --no-daemon"
                 }
             }
