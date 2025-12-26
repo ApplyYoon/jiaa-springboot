@@ -27,7 +27,7 @@ pipeline {
                 echo "${params.SERVICE_NAME} 소스 빌드를 시작합니다..."
                 dir("${params.SERVICE_NAME}") {
                     // 테스트는 위에서 했으니 여기선 건너뜀
-                    sh '../gradlew :${params.SERVICE_NAME}:bootJar --no-daemon -x test'
+                    sh "../gradlew :${params.SERVICE_NAME}:bootJar --no-daemon -x test"
                 }
             }
         }
