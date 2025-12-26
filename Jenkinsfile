@@ -12,6 +12,7 @@ pipeline {
         stage('Unit Test') {
             steps {
                 // 1. 먼저 테스트만 돌려서 통과 여부를 확인
+                echo '유닛 테스트를 실행합니다... '
                 sh './gradlew test --no-daemon' 
             }
             post {
@@ -19,6 +20,14 @@ pipeline {
                     // 테스트 결과를 젠킨스 대시보드에 기록
                     junit '**/build/test-results/test/*.xml'
                 }
+            }
+        }
+
+        stage('Source Build') {
+            steps {
+                echo '소스 빌드를 실행합니다... '
+                sh 'chmod +x gradlew'
+                sh './gradlew bootJar --no-daemon'
             }
         }
     }
