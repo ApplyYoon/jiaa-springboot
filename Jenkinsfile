@@ -11,10 +11,8 @@ pipeline {
 
         stage('Unit Test') {
             steps {
-                dir('user-service') {
-                    // 1. 먼저 테스트만 돌려서 통과 여부를 확인
-                    sh './gradlew test --no-daemon' 
-                }
+                // 1. 먼저 테스트만 돌려서 통과 여부를 확인
+                sh './gradlew test --no-daemon' 
             }
             post {
                 always {
