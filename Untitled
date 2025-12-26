@@ -1,0 +1,1 @@
+kubectl logs auth-service-765f9f4f5d-8hvkr -n jiwon-tech --tail=100
