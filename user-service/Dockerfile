@@ -1,11 +1,12 @@
-# 1. 실행만 할 거니까 JRE 버전으로 충분합니다! (이미지 용량 다이어트!)
-FROM eclipse-temurin:21-jre-alpine
+# Amazon Linux 2023 기반의 Corretto 21 JRE 버전
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:21-al2023-jre
 
 WORKDIR /app
 
-# 2. 젠킨스가 이미 구워놓은 JAR 파일만 쏙 가져옵니다!
-# (경로: 현재 폴더 안의 build/libs/ 에서 가져오는 겁니다)
+# 보안 업데이트
+RUN dnf update -y && dnf clean all
+
+# 빌드된 JAR 복사 (기존과 동일)
 COPY build/libs/*.jar app.jar
 
-# 3. 바로 실행
 ENTRYPOINT ["java", "-jar", "app.jar"]
